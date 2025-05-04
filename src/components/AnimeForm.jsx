@@ -103,16 +103,16 @@ const AnimeForm = ({ onAnimeAdded, expanded, onExpandedChange }) => {
           img.onerror = () => {
             // Image failed to load, use fallback
             console.error(`Image failed to load: ${imageUrl}`);
-            useFallbackImage(title);
+            setFallbackImage(title);
           };
           img.src = imageUrl;
         } else {
           // If no suitable image found, use fallback
-          useFallbackImage(title);
+          setFallbackImage(title);
         }
       } else {
         // If no image found, use fallback
-        useFallbackImage(title);
+        setFallbackImage(title);
       }
     } catch (error) {
       console.error("Error fetching anime image:", error);
@@ -122,7 +122,7 @@ const AnimeForm = ({ onAnimeAdded, expanded, onExpandedChange }) => {
   };
 
   // Helper function for fallback image with better quality
-  const useFallbackImage = (title) => {
+  const setFallbackImage = (title) => {
     // Use a high-quality placeholder as fallback
     const fallbackUrl = `https://via.placeholder.com/600x800/6366f1/ffffff?text=${encodeURIComponent(title)}`;
     setFormData(prev => ({
