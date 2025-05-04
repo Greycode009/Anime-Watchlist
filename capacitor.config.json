@@ -1,0 +1,34 @@
+{
+  "appId": "com.anime_dipesh.app",
+  "appName": "AnimeList",
+  "webDir": "build",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "android": {
+    "webContentsDebuggingEnabled": false,
+    "allowMixedContent": false,
+    "captureInput": false,
+    "overrideUserAgent": "",
+    "backgroundColor": "#FFFFFF",
+    "minWebViewVersion": 55,
+    "contentInset": {
+      "top": 0,
+      "left": 0,
+      "right": 0,
+      "bottom": 0
+    },
+    "hideLogs": true,
+    "allowBackup": false,
+    "resizeOnFullScreen": false,
+    "minSdk": 21,
+    "targetSdk": 33
+  },
+  "bundledWebRuntime": false,
+  "cordova": {}
+} 

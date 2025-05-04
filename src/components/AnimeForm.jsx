@@ -225,8 +225,8 @@ const AnimeForm = ({ onAnimeAdded, expanded, onExpandedChange }) => {
       case 'S': return '🏆';
       case 'A': return '⭐';
       case 'B': return '👍';
-      case 'C': return '😊';
-      case 'D': return '👌';
+      case 'C': return '😑';
+      case 'D': return '👎';
       default: return '📋';
     }
   };

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Anime Watchlist</string>
+    <string name="title_activity_main">Anime Watchlist</string>
+    <string name="package_name">com.anime_dipesh.app</string>
+    <string name="custom_url_scheme">com.anime_dipesh.app</string>
+</resources>

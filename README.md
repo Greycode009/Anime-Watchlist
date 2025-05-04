@@ -4,6 +4,48 @@
 
 A modern web application to track, rate, and organize your favorite anime series with an elegant UI and robust features.
 
+## Optimized Android App
+
+This project includes an optimized Android app build process that significantly reduces the app size from 18MB to approximately 5-7MB with all the same features.
+
+### Key optimizations include:
+
+1. **APK Size Reduction**
+   - Minification and obfuscation of JavaScript and CSS
+   - Image optimization (compression and format conversion)
+   - Removal of unused code with ProGuard/R8
+   - Selective architecture builds (arm64-v8a and armeabi-v7a only)
+
+2. **WebView Optimizations**
+   - Custom WebView implementation that reduces memory usage
+   - Disabled unused WebView features
+   - Proper resource management in app lifecycle
+
+3. **Build Process**
+   - Optimized Webpack configuration
+   - CSS purging to remove unused styles
+   - Code splitting and lazy loading for faster startup
+
+### Building the optimized Android app
+
+1. Make sure you have the Android SDK and JDK installed
+2. Run the optimized build script:
+
+```bash
+# Make the script executable
+chmod +x scripts/build-android.sh
+
+# Build the optimized APK
+./scripts/build-android.sh
+
+# Or if you need to install dependencies first
+./scripts/build-android.sh --install
+```
+
+The optimized APK and AAB will be available in:
+- APK: `android/app/build/outputs/apk/release/app-release-unsigned.apk`
+- AAB: `android/app/build/outputs/bundle/release/app-release.aab`
+
 ## Features
 
 - **Anime Collection Management**: Add, edit, and delete anime entries

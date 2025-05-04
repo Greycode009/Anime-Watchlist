@@ -106,182 +106,160 @@ const AnimeList = () => {
     setSortConfig({ key: 'title', direction: 'ascending' });
   };
 
+  // Category buttons (filter by status)
+  const categoryList = [
+    { id: 'All', label: 'All Anime' },
+    { id: 'Watchlist', label: 'Watchlist' },
+    { id: 'Watched', label: 'Watched' },
+    { id: 'Ongoing', label: 'Ongoing' },
+    { id: 'Plan to Watch', label: 'Plan to Watch' }
+  ];
+
+  // Sorting options for dropdown
+  const sortOptions = [
+    { key: 'title', direction: 'ascending', label: 'Title (A-Z)' },
+    { key: 'title', direction: 'descending', label: 'Title (Z-A)' },
+    { key: 'rating', direction: 'descending', label: 'Rating (High-Low)' },
+    { key: 'rating', direction: 'ascending', label: 'Rating (Low-High)' },
+    { key: 'status', direction: 'ascending', label: 'Status (A-Z)' },
+    { key: 'tier', direction: 'ascending', label: 'Tier (A-Z)' },
+  ];
+
   return (
-    <div className="mt-6">
-      {/* Search and filter bar */}
-      <div className={`mb-6 ${isDark ? 'bg-dark-800' : 'bg-white'} border ${isDark ? 'border-dark-700' : 'border-gray-200'} rounded-lg shadow-sm p-4`}>
-        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-          {/* Search input */}
-          <div className="w-full lg:w-1/3">
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg className={`w-4 h-4 ${isDark ? 'text-dark-400' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-              </div>
-              <input
-                type="search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={`${isDark ? 'bg-dark-700 border-dark-600 text-white placeholder-dark-400' : 'bg-gray-50 border-gray-300 text-gray-900'} border text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 p-2.5`}
-                placeholder="Search by title, status, tier..."
-              />
-            </div>
-          </div>
-
-          {/* Sort options dropdown */}
-          <div className="w-full lg:w-auto">
-            <div className="flex items-center gap-2">
-              <label className={`text-sm font-medium ${isDark ? 'text-dark-200' : 'text-gray-600'}`}>Sort by:</label>
-              <select
-                value={`${sortConfig.key}-${sortConfig.direction}`}
-                onChange={(e) => {
-                  const [key, direction] = e.target.value.split('-');
-                  setSortConfig({ key, direction });
-                }}
-                className={`${isDark ? 'bg-dark-700 border-dark-600 text-white' : 'bg-gray-50 border-gray-300 text-gray-900'} border text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5`}
-              >
-                <option value="title-ascending">Title (A-Z)</option>
-                <option value="title-descending">Title (Z-A)</option>
-                <option value="rating-descending">Rating (High-Low)</option>
-                <option value="rating-ascending">Rating (Low-High)</option>
-                <option value="status-ascending">Status (A-Z)</option>
-                <option value="tier-ascending">Tier (A-Z)</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Clear filters */}
-          {(searchTerm || activeCategory !== 'All' || 
-            sortConfig.key !== 'title' || sortConfig.direction !== 'ascending') && (
+    <div className="pb-12 sm:pb-24">
+      {/* Filters Row */}
+      <div className="flex flex-col sm:flex-row justify-between gap-4 mb-6 flex-wrap">
+        {/* Categories */}
+        <div className="flex overflow-x-auto pb-2 sm:pb-0 space-x-2 max-w-full">
+          {categoryList.map(category => (
             <button
-              onClick={clearFilters}
-              className="text-sm text-indigo-600 hover:text-indigo-800 flex items-center"
-            >
-              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-              Clear filters
-            </button>
-          )}
-        </div>
-
-        {/* Search results count */}
-        {searchTerm && (
-          <div className={`mt-3 text-sm ${isDark ? 'text-dark-300' : 'text-gray-600'}`}>
-            Found {filteredAnime.length} {filteredAnime.length === 1 ? 'result' : 'results'} for "{searchTerm}"
-          </div>
-        )}
-      </div>
-
-      {/* Top control bar with category filters and view toggle */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        {/* Category filter buttons */}
-        <div className="flex flex-wrap justify-center md:justify-start gap-2">
-          {['All', 'Watchlist', 'Watched', 'Ongoing', 'Plan to Watch'].map(category => (
-            <motion.button
-              key={category}
-              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border-2 ${
-                activeCategory === category
-                  ? 'anime-gradient-bg text-white border-transparent'
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className={`whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeCategory === category.id 
+                  ? 'bg-indigo-600 text-white' 
                   : isDark 
-                    ? 'bg-dark-800 text-white border-dark-700 hover:border-indigo-500' 
-                    : 'bg-white text-gray-800 border-gray-200 hover:border-indigo-300'
-              } transition-colors duration-200 shadow-sm`}
-              onClick={() => setActiveCategory(category)}
-              whileHover={{ scale: 1.05, boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}
-              whileTap={{ scale: 0.95 }}
+                    ? 'bg-dark-700 text-white hover:bg-dark-600' 
+                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+              }`}
             >
-              {category}
-            </motion.button>
+              {category.label}
+            </button>
           ))}
         </div>
 
-        {/* View mode toggle */}
-        <div className="flex justify-center md:justify-start">
-          <div className={`${isDark ? 'bg-dark-800 border-dark-700' : 'bg-white border-gray-200'} border rounded-lg shadow-sm flex`}>
-            <button
-              className={`px-3 py-2 rounded-l-lg flex items-center space-x-1 text-sm ${
-                viewMode === 'grid' 
-                  ? 'bg-indigo-600 text-white' 
-                  : isDark ? 'text-white hover:bg-dark-700' : 'text-gray-700 hover:bg-gray-100'
-              }`}
-              onClick={() => setViewMode('grid')}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-              </svg>
-              <span className="hidden sm:inline">Cards</span>
-            </button>
-            <button
-              className={`px-3 py-2 rounded-r-lg flex items-center space-x-1 text-sm ${
-                viewMode === 'list' 
-                  ? 'bg-indigo-600 text-white' 
-                  : isDark ? 'text-white hover:bg-dark-700' : 'text-gray-700 hover:bg-gray-100'
-              }`}
-              onClick={() => setViewMode('list')}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-              <span className="hidden sm:inline">List</span>
-            </button>
+        {/* Search and Views */}
+        <div className="flex gap-2 flex-wrap items-center justify-between sm:justify-end w-full sm:w-auto">
+          {/* Search Bar */}
+          <div className={`${isDark ? 'bg-dark-800 border-dark-700' : 'bg-white border-gray-200'} border rounded-lg flex-1 sm:flex-none min-w-[200px] flex items-center px-3 py-2 shadow-sm`}>
+            <svg className={`h-4 w-4 ${isDark ? 'text-gray-400' : 'text-gray-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search anime..."
+              className={`ml-2 w-full outline-none text-sm ${isDark ? 'bg-dark-800 text-white placeholder-gray-500' : 'text-gray-900 placeholder-gray-400'}`}
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className={`ml-1 ${isDark ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'}`}
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* View Switcher */}
+          <div className="flex justify-center md:justify-start">
+            <div className={`${isDark ? 'bg-dark-800 border-dark-700' : 'bg-white border-gray-200'} border rounded-lg shadow-sm flex`}>
+              <button
+                className={`px-3 py-2 rounded-l-lg flex items-center space-x-1 text-sm ${
+                  viewMode === 'grid' 
+                    ? 'bg-indigo-600 text-white' 
+                    : isDark ? 'text-white hover:bg-dark-700' : 'text-gray-700 hover:bg-gray-100'
+                }`}
+                onClick={() => setViewMode('grid')}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                </svg>
+                <span className="hidden sm:inline">Cards</span>
+              </button>
+              <button
+                className={`px-3 py-2 rounded-r-lg flex items-center space-x-1 text-sm ${
+                  viewMode === 'list' 
+                    ? 'bg-indigo-600 text-white' 
+                    : isDark ? 'text-white hover:bg-dark-700' : 'text-gray-700 hover:bg-gray-100'
+                }`}
+                onClick={() => setViewMode('list')}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <span className="hidden sm:inline">List</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Empty state message */}
-      {filteredAnime.length === 0 ? (
-        <motion.div
-          className={`text-center p-6 sm:p-8 ${isDark ? 'bg-dark-800' : 'bg-white'} rounded-lg border-2 border-dashed ${isDark ? 'border-dark-700' : 'border-gray-300'}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+      {sortedAnime.length === 0 ? (
+        <motion.div 
+          className={`flex flex-col items-center justify-center py-16 px-4 ${isDark ? 'bg-dark-800' : 'bg-white'} rounded-xl shadow-sm border ${isDark ? 'border-dark-700' : 'border-gray-200'} text-center`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <svg
-            className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-indigo-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="mb-4"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
-            />
-          </svg>
-          <h3 className={`mt-3 text-base sm:text-lg font-medium ${isDark ? 'text-white' : 'text-gray-900'} anime-title`}>No anime found</h3>
-          <p className={`mt-2 text-sm sm:text-base ${isDark ? 'text-dark-300' : 'text-gray-500'}`}>
-            {searchTerm 
-              ? `No results matching "${searchTerm}"`
-              : activeCategory === 'All'
-                ? 'Start by adding some anime to your list'
-                : `No anime in ${activeCategory} category`}
-          </p>
-          <motion.div 
-            className="mt-5 flex flex-wrap justify-center gap-2"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm('')}
-                className="anime-gradient-bg text-white px-4 py-2 rounded-md text-sm font-medium"
-              >
-                Clear Search
-              </button>
-            )}
-            {activeCategory !== 'All' && (
-              <button
-                onClick={() => setActiveCategory('All')}
-                className="anime-gradient-bg text-white px-4 py-2 rounded-md text-sm font-medium"
-              >
-                View All Anime
-              </button>
-            )}
+            <svg className={`w-20 h-20 ${isDark ? 'text-dark-500' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+            </svg>
           </motion.div>
+          <motion.h3 
+            className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            {searchTerm ? "No matching anime found" : "Your anime list is empty"}
+          </motion.h3>
+          <motion.p 
+            className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-6`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            {searchTerm 
+              ? "Try adjusting your search or filters to find what you're looking for."
+              : "Add your first anime to start building your collection."}
+          </motion.p>
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="anime-gradient-bg text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Clear Search
+            </button>
+          )}
+          {activeCategory !== 'All' && (
+            <button
+              onClick={() => setActiveCategory('All')}
+              className="anime-gradient-bg text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              View All Anime
+            </button>
+          )}
         </motion.div>
       ) : (
         <AnimatePresence mode="wait">
@@ -390,21 +368,28 @@ const AnimeList = () => {
                       </span>
                     )}
                   </div>
-                  <div className={`col-span-2 flex items-center justify-center ${isDark ? 'text-dark-300' : 'text-gray-500'}`}>
+                  <div className={`col-span-2 flex items-center justify-end ${isDark ? 'text-dark-300' : 'text-gray-500'}`}>
                     <span>Actions</span>
                   </div>
                 </div>
               </div>
-              
-              {/* Table body */}
-              <div className={`divide-y ${isDark ? 'divide-dark-700' : 'divide-gray-200'}`}>
+
+              {/* List Items */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="divide-y divide-gray-200 dark:divide-dark-600"
+              >
                 {sortedAnime.map(anime => (
-                  <AnimeListRow 
-                    key={`anime-list-${anime.id}-${refreshTrigger}`} 
-                    anime={anime} 
-                  />
+                  <motion.div 
+                    key={`anime-list-${anime.id}-${refreshTrigger}`}
+                    variants={itemVariants}
+                  >
+                    <AnimeListRow anime={anime} />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

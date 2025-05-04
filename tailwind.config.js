@@ -2,23 +2,21 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html"
   ],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
         dark: {
-          50: '#f9fafb',
-          100: '#f3f4f6',
-          200: '#e5e7eb',
-          300: '#d1d5db',
-          400: '#9ca3af',
-          500: '#6b7280',
-          600: '#4b5563',
-          700: '#374151',
-          800: '#1f2937',
-          900: '#111827',
-          950: '#0a0c14',
+          800: '#1a1a2e',
+          700: '#21213d',
+          600: '#2c2c4c',
+          500: '#373759',
+          400: '#4f4f73',
+          300: '#696990',
+          200: '#8d8daa',
+          100: '#b8b8cc',
         },
       },
       backgroundImage: {
@@ -27,4 +25,33 @@ module.exports = {
     },
   },
   plugins: [],
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      './src/**/*.{js,jsx,ts,tsx}',
+      './public/index.html',
+    ],
+    options: {
+      safelist: [
+        // Ensure essential classes aren't purged
+        /^bg-/,
+        /^text-/,
+        /^border-/,
+        /^hover:/,
+        /^dark:/,
+        /^h-/,
+        /^w-/,
+        /^p-/,
+        /^m-/,
+        'animate-spin',
+        'anime-gradient-bg',
+        'rounded-full',
+        'rounded-lg',
+        'object-cover',
+        'transition-opacity',
+        'transition-transform',
+        'duration-300'
+      ],
+    },
+  },
 } 
