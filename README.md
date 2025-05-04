@@ -1,70 +1,128 @@
-# Getting Started with Create React App
+# Anime Watchlist
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Anime Watchlist](https://raw.githubusercontent.com/Greycode009/anime-list/main/public/logo192.png)
 
-## Available Scripts
+A modern web application to track, rate, and organize your favorite anime series with an elegant UI and robust features.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Anime Collection Management**: Add, edit, and delete anime entries
+- **Rating System**: Rate your anime on a scale of 0-10
+- **Tier Ranking**: Organize anime into S, A, B, C, D tiers, or leave them unranked
+- **Watch Status Tracking**: Track anime as Watchlist, Completed, Abandoned, or Dropped
+- **Image Integration**: Upload custom images or use automatic image search via Jikan API
+- **Dark & Light Themes**: Full theme support with polished UI in both modes
+- **Responsive Design**: Optimized for mobile, tablet, and desktop viewing
+- **Drag & Drop**: Easily organize your anime between tiers
+- **Search & Filter**: Find anime by title, status, or rating
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: React 19
+- **Styling**: TailwindCSS 3.3
+- **Animations**: Framer Motion 12
+- **State Management**: React Context API
+- **API Integration**: Jikan API (Anime data)
+- **Image Handling**: Browser File API + URL Object API
 
-### `npm test`
+## Screenshots
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+*Place screenshots here in the future*
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Node.js (v16.0.0 or higher)
+- npm or yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Installation
 
-### `npm run eject`
+1. Clone the repository
+   ```bash
+   git clone https://github.com/Greycode009/anime-list.git
+   cd anime-list
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. Install dependencies
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Start the development server
+   ```bash
+   npm start
+   # or
+   yarn start
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Open [http://localhost:3000](http://localhost:3000) to view it in your browser
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```
+src/
+├── components/           # UI Components
+│   ├── AnimeCard.jsx     # Card display for anime entries
+│   ├── AnimeForm.jsx     # Form for adding/editing anime
+│   ├── AnimeList.jsx     # List view of anime entries
+│   ├── AnimeListRow.jsx  # Row component for list view
+│   ├── Footer.jsx        # Application footer
+│   ├── Navbar.jsx        # Navigation bar
+│   ├── Navigation.jsx    # Navigation controls
+│   └── RankingPage.jsx   # Tier-based ranking view
+├── context/              # State management
+│   ├── AnimeContext.jsx  # Anime data context provider
+│   └── ThemeContext.jsx  # Theme (dark/light) context
+├── App.js                # Main application component
+└── index.js              # Application entry point
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Adding Anime**: Click "Add New Anime" button and enter details
+2. **Rating Anime**: Use the slider to set a rating from 0-10
+3. **Ranking Anime**: Assign a tier (S/A/B/C/D) for each anime
+4. **View Modes**: Switch between List and Ranking views
+5. **Dark Mode**: Toggle between light and dark themes
 
-### Code Splitting
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-### Analyzing the Bundle Size
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Legal Documentation
 
-### Making a Progressive Web App
+Anime Watchlist includes the following legal documents:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- [Privacy Policy](/public/docs/privacy-policy.html) - Details how we collect, use, and protect user data
+- [Terms of Service](/public/docs/terms-of-service.html) - Outlines the rules and guidelines for using our application
 
-### Advanced Configuration
+These documents are designed to protect both users and the application developers.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## License
 
-### Deployment
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contact
 
-### `npm run build` fails to minify
+GitHub: [Greycode009](https://github.com/Greycode009)  
+X: [@dipeshmalla29](https://x.com/dipeshmalla29)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgments
+
+- [Jikan API](https://jikan.moe/) for anime data
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Framer Motion](https://www.framer.com/motion/) for animations
+- [Create React App](https://create-react-app.dev/) for project bootstrapping
+
+---
+
+© 2025 Anime Watchlist. All rights reserved.

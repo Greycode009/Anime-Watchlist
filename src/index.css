@@ -1,13 +1,398 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS Variables */
+:root {
+  --primary-gradient: linear-gradient(to right, #ec4899, #8b5cf6);
+  --glow-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+/* Dark mode variables */
+.dark {
+  --bg-color: #111827;
+  --text-color: #f3f4f6;
+  --card-bg: #1f2937;
+  --border-color: #374151;
+  --hover-bg: #2d3748;
+  --input-bg: #1f2937;
+  --input-border: #4b5563;
+}
+
+/* Light mode variables */
+.light {
+  --bg-color: #f3f4f6;
+  --text-color: #1f2937;
+  --card-bg: #ffffff;
+  --border-color: #e5e7eb;
+  --hover-bg: #f9fafb;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+}
+
+/* Apply theme variables */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='church-on-sunday' fill='%236366f1' fill-opacity='0.05'%3E%3Cpath d='M77.17 0H80v2.83l-.1.1A39.9 39.9 0 0 1 74.64 20a39.9 39.9 0 0 1 5.24 17.06l.11.11v2.89c-.01 6.9-1.8 13.79-5.35 19.94A39.96 39.96 0 0 1 80 79.94V80h-2.83L66.84 69.66a39.83 39.83 0 0 1-24.1 10.25l.09.09h-5.66l.1-.1c-8.7-.58-17.22-4-24.1-10.23L2.82 80H0V79.94c.01-6.9 1.8-13.8 5.35-19.94A39.96 39.96 0 0 1 0 40.06V37.17l.1-.1A39.9 39.9 0 0 1 5.36 20 39.9 39.9 0 0 1 .1 2.94L0 2.83V0h2.83l-.1.1a39.83 39.83 0 0 1 24.1 10.24L37.17 0H40c0 6.92-1.78 13.83-5.35 20A39.96 39.96 0 0 1 40 40c0-6.92 1.78-13.83 5.35-20A39.96 39.96 0 0 1 40 0h2.83l10.33 10.34A39.83 39.83 0 0 1 77.26.09L77.17 0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.anime-title {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.anime-subtitle {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.japanese-text {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.anime-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.anime-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.anime-card:hover::after {
+  opacity: 1;
+}
+
+.anime-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  border-color: #6366f1;
+  z-index: 10;
+}
+
+/* Ensure buttons in anime card have higher z-index */
+.anime-card button,
+.anime-card input,
+.anime-card select {
+  position: relative;
+  z-index: 20;
+}
+
+/* Ensure click events go through the glow effect */
+.anime-glow::before {
+  pointer-events: none;
+}
+
+.anime-gradient-bg {
+  background: linear-gradient(45deg, #ec4899, #8b5cf6, #3b82f6);
+  background-size: 200% 200%;
+  animation: gradientFlow 6s ease infinite;
+}
+
+.anime-gradient-text {
+  background: linear-gradient(45deg, #ec4899, #8b5cf6, #3b82f6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientFlow 6s ease infinite;
+}
+
+.anime-pattern-bg {
+  background-color: #6366f1;
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 20.83l2.83-2.83 1.41 1.41L1.41 22.24H0v-1.41zM0 3.07l2.83-2.83 1.41 1.41L1.41 4.48H0V3.07zm15.66 18.59l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zM15.66 1.07l2.83-2.83 1.41 1.41-2.83 2.83h-1.41V1.07zm15.66 18.59l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zM33.73 1.07l2.83-2.83 1.41 1.41-2.83 2.83h-1.41V1.07zM0 36.59l2.83-2.83 1.41 1.41L1.41 38H0v-1.41zM17.07 36.59l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41zM34.14 36.59l2.83-2.83 1.41 1.41-2.83 2.83h-1.41v-1.41z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Glass effect for navbar */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: linear-gradient(to right, #ec4899, #8b5cf6);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Dark mode specific styles for nav-link */
+.dark .nav-link::after {
+  background: linear-gradient(to right, #ec4899, #8b5cf6);
+}
+
+/* Light mode specific styles for nav-link */
+body:not(.dark) .nav-link::after {
+  background: linear-gradient(to right, #db2777, #7c3aed);
+}
+
+/* Animated background for nav buttons */
+.animated-bg-button {
+  background-size: 200% 200%;
+  animation: gradientFlow 6s ease infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.anime-glow {
+  position: relative;
+}
+
+.anime-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #4f46e5, #9333ea, #ec4899);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.anime-glow:hover::before {
+  opacity: 1;
+}
+
+/* Status badge styles */
+.status-badge {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: rotate(30deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.status-badge:hover::after {
+  opacity: 1;
+  transform: rotate(30deg) translate(0, 0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+}
+
+/* Anime button styles */
+.anime-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.anime-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  transform: rotate(30deg) translateY(100%);
+  transition: all 0.5s ease;
+}
+
+.anime-btn:hover::after {
+  transform: rotate(30deg) translateY(-100%);
+}
+
+/* Shadow glow effect for buttons */
+.shadow-glow {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+}
+
+.shadow-glow:hover {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
+}
+
+/* Dark mode component styles */
+.dark .card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+.dark input, 
+.dark select, 
+.dark textarea {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--text-color);
+}
+
+.dark button:not(.anime-gradient-bg) {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+.dark table {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+}
+
+.dark th {
+  background-color: var(--hover-bg);
+}
+
+.dark tr:hover {
+  background-color: rgba(75, 85, 99, 0.2);
+}
+
+/* Custom Range Input Styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Range Thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4f46e5;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  margin-top: -7px; /* Adjust vertical position */
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #4f46e5;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Dark Mode Range Thumb */
+.dark input[type="range"]::-webkit-slider-thumb {
+  background: #6366f1;
+  border: 2px solid #1f2937;
+}
+
+.dark input[type="range"]::-moz-range-thumb {
+  background: #6366f1;
+  border: 2px solid #1f2937;
+}
+
+/* Range Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #d1d5db;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: #d1d5db;
+}
+
+/* Dark Mode Range Track */
+.dark input[type="range"]::-webkit-slider-runnable-track {
+  background: #374151;
+}
+
+.dark input[type="range"]::-moz-range-track {
+  background: #374151;
+}
+
+/* Responsive font sizes */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+  }
 }
